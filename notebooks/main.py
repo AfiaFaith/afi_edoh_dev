@@ -15,15 +15,18 @@ def verifier_format_nom_fichier(repertoire):
     # Expression régulière pour le format de nom de fichier "loanYYYYMMDD.csv"
     format_nom_fichier = r'^loan\d{8}\.csv$'
 
-    # Liste les fichiers dans le répertoire spécifié
-    fichiers = os.listdir(repertoire)
+    try:
+        # Liste les fichiers dans le répertoire spécifié
+        fichiers = os.listdir(repertoire)
 
-    # Parcours les fichiers et vérifie le format du nom
-    for fichier in fichiers:
-        if re.match(format_nom_fichier, fichier):
-            print(f"Nom de fichier correct : {fichier}")
-        else:
-            print(f"Nom de fichier incorrect : {fichier}")
+        # Parcours les fichiers et vérifie le format du nom
+        for fichier in fichiers:
+            if re.match(format_nom_fichier, fichier):
+                print(f"Nom de fichier correct : {fichier}")
+            else:
+                print(f"Nom de fichier incorrect : {fichier}")
+    except OSError as e:
+        print(f"Erreur lors de la lecture du répertoire : {e}")
 
 if __name__ == "__main__":
     # Configuration des arguments de ligne de commande
@@ -31,5 +34,6 @@ if __name__ == "__main__":
 
     # Vérification du format du nom de fichier dans le répertoire spécifié
     verifier_format_nom_fichier(args.repertoire)
+
 
 
