@@ -2,20 +2,34 @@
 
 import os
 import re
+import argparse
 
-# Répertoire contenant les fichiers
-repertoire = "/chemin/vers/votre/repertoire"
+# Fonction de configuration pour gérer les arguments de ligne de commande
+def configurer_arguments():
+    parser = argparse.ArgumentParser(description="Vérification des noms de fichiers au format 'loanYYYYMMDD.csv'")
+    parser.add_argument("repertoire", help="Chemin vers le répertoire contenant les fichiers à vérifier")
+    return parser.parse_args()
 
-# Expression régulière pour le format de nom de fichier
-format_requis = r'^loan\d{8}\.csv$'
+# Fonction pour vérifier le format du nom de fichier
+def verifier_format_nom_fichier(repertoire):
+    # Expression régulière pour le format de nom de fichier "loanYYYYMMDD.csv"
+    format_nom_fichier = r'^loan\d{8}\.csv$'
 
-# Liste les fichiers dans le répertoire
-fichiers = os.listdir(repertoire)
+    # Liste les fichiers dans le répertoire spécifié
+    fichiers = os.listdir(repertoire)
 
-# Parcours les fichiers et vérifie le format du nom
-for fichier in fichiers:
-    if re.match(format_requis, fichier):
-        print(f"Nom de fichier correct : {fichier}")
-    else:
-        print(f"Nom de fichier incorrect : {fichier}")
+    # Parcours les fichiers et vérifie le format du nom
+    for fichier in fichiers:
+        if re.match(format_nom_fichier, fichier):
+            print(f"Nom de fichier correct : {fichier}")
+        else:
+            print(f"Nom de fichier incorrect : {fichier}")
+
+if __name__ == "__main__":
+    # Configuration des arguments de ligne de commande
+    args = configurer_arguments()
+
+    # Vérification du format du nom de fichier dans le répertoire spécifié
+    verifier_format_nom_fichier(args.repertoire)
+
 
