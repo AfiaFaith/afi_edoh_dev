@@ -4,6 +4,7 @@ import os
 import re
 import argparse
 import sys
+import unittest
 
 # Fonction de configuration pour gérer les arguments de ligne de commande
 def configurer_arguments():
@@ -40,9 +41,17 @@ def verifier_format_nom_fichier(repertoire, fichier_sortie=None):
     except OSError as e:
         print(f"Erreur lors de la lecture du répertoire : {e}")
 
-if __name__ == "__main__":
-    # Configuration des arguments de ligne de commande
-    args = configurer_arguments()
+# Classe de tests unitaires
+class TestVerificationNomsFichiers(unittest.TestCase):
+    def test_nom_fichier_correct(self):
+        self.assertEqual(verifier_format_nom_fichier("test_data", None), None)
+    
+    def test_nom_fichier_incorrect(self):
+        self.assertNotEqual(verifier_format_nom_fichier("test_data", None), None)
+    
+    def test_erreur_lecture_repertoire(self):
+        self.assertEqual(verifier_format_nom_fichier("chemin_inexistant", None), None)
 
-    # Vérification du format du nom de fichier dans le répertoire spécifié
-    verifier_format_nom_fichier(args.repertoire, args.output)
+if __name__ == "__main__":
+    # Exécution des tests unitaires
+    unittest.main()
